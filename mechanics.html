@@ -55,6 +55,13 @@
       </td>
     </tr>
   </table>
+  <!--
+    Hi, I'm Jason Moore recently from UC Davis, soon to be at Cleveland State
+    University. I'm trained as a mechanical engineer and particularly a
+    dynamicist and controls engineer. I'm going to talk about a project we've
+    been working on that allows us to accurately derive the equations of motion
+    of complex multi body systems with Python.
+  -->
 </section>
 
 <section class="slide">
@@ -63,6 +70,23 @@
   the action of external forces.</p>
   <h3>Newton/Euler Equations</h3>
   <p>$$\sum F=\frac{dp}{dt} \textrm{ and } \sum T=\frac{dH}{dt}$$</p>
+  <!--
+    So to start off let's remind ourselves what rigid body or multi-body
+    dynamics are. It is the stufy of the movement of systems of interconnected
+    rigid bodies under the action of external forces. We all learned basic
+    rigid body dynamcis in our intro physics courses and you may remember that
+    these two equations (the Newton-Euler equations) govern the motion of
+    objects in our macro world. The first says that the sum of all forces
+    acting on a body is equal to the change in linear momentum and the second
+    is that the sum of the torques acting on the body is equal to the change in
+    angular momentum. These equations generally represent high order nonlinear
+    ordinary differential equations for systems of rigid bodies moving in three
+    dimensional space. These may seem trivial but for more than one body with
+    potential kinematic and motion constraints these equations these equations
+    quickly grow in complexity. For example, I worked with a 4 body 3 DoF
+    problem for most of my graduate work and the equations would just fit on 30
+    pages at 11 pt font.
+  -->
 </section>
 
 <section class="slide">
@@ -74,7 +98,16 @@
     <li>spacecraft dynamics</li>
     <li>sports biomechanics</li>
     <li>planetary motion</li>
+    <li>physics/engineering education</li>
+    <li>figuring out how a cat always lands on its feet</li>
   </ul>
+  <!--
+    So who uses these equations? We find heavy use of rigid body dynamics in
+    many topics from robotics to sports biomechanics and vehicle dynamics to
+    planetary motion. I've work in a sport biomechanics lab for my graduate
+    studies and we are often concerned with the motion of humans and the
+    various implements or vehicles they use in sports.
+  -->
 </section>
 
 <section class="slide">
@@ -90,15 +123,15 @@
     </tr>
     <tr>
       <td>DADS</td>
-      <td>Open Dynamics Engine</td>
+      <td>SimTK</td>
     </tr>
     <tr>
       <td>VehicleSim</td>
-      <td>Bullet</td>
+      <td><a href="http://mat21.etsii.upm.es/mbs/mbs3d">MBS3D</a></td>
     </tr>
     <tr>
       <td>Working Model</td>
-      <td>SimTK</td>
+      <td>Open Dynamics Engine</td>
     </tr>
     <tr>
       <td>SDFast</td>
@@ -106,10 +139,14 @@
     </tr>
     <tr>
       <td>Spacar</td>
-      <td><a href="http://mat21.etsii.upm.es/mbs/mbs3d">MBS3D</a></td>
+      <td>Bullet</td>
     </tr>
     <tr>
       <td>Adams</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>MADYMO</td>
       <td></td>
     </tr>
   </table>
@@ -118,6 +155,20 @@
     <li>real time, low fidelity</li>
     <li>high fidelity, high precision</li>
   </ul>
+  <!--
+    Now the question is whether there is software that can help us do rigid
+    body dynamics. There is a fair amount. Here are a few that can help us
+    solve rigid body dynamics. Most robust packages that do this are closed
+    source and the price tag for the good ones are on the order $20K a seat.
+    This ecosystem does not support reproducility in rigid body dynamics. That
+    30 page set of equations that I mentioned was of a model that had been
+    derived at least 50 different times over the past 100 or so years. A paper
+    in 2007 found that about 5 or so of those were actually correct. But this
+    paper released the source code computational derviations in custom
+    expensive languages that make it impossible to verify code. These kinds of
+    issues is pushing us to introduce an open source competitor to these other
+    packages.
+  -->
 </section>
 
 <section class="slide">
@@ -129,6 +180,15 @@
   <h3>SymPy Mechanics</h3>
   <p>The core symbolic engine for equation of motion derivation is built on top
   of SymPy and is the core of PyDy.</p>
+  <!--
+    Our plan is to create an open source competitor to these other projects
+    that can perform with more modern tools on all platforms and allow for
+    reproducible modeling efforts. We are calling this effort PyDy and work
+    is starting this summer on some of the packages that will make this
+    possible. The core of this system is a package in SymPy called mechanics.
+    This is where all the derviations happen and code generation. I'll be
+    talking mostly about the Mechanics package today.
+  -->
 </section>
 
 <section class="slide">
@@ -150,7 +210,7 @@
     <li>Handles complex constraints (holonomic/non-holonomic) with ease</li>
     <li>Automated equation of motion generation with Kane's or Lagrange's
     methods</li>
-    <li>Symbolic linearization</li>
+    <li>Symbolic linearization of systems</li>
   </ul>
 </section>
 

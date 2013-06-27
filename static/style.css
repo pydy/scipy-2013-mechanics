@@ -23,8 +23,12 @@ table.side-by-side td {
   padding-top: 3cm;
 }
 
-li.alert {
+.alert {
   color: #c00;
+}
+
+.emphasize {
+  color: #333399
 }
 
 table.gridtable {
