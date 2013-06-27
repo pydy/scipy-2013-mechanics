@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>Dynamics with SymPy Mechanics</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" href="deck.js/core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" href="deck.js/extensions/goto/deck.goto.css">
+  <link rel="stylesheet" href="deck.js/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" href="deck.js/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" href="deck.js/extensions/status/deck.status.css">
+  <link rel="stylesheet" href="deck.js/extensions/hash/deck.hash.css">
+  <link rel="stylesheet" href="deck.js/extensions/scale/deck.scale.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" href="deck.js/themes/style/swiss.css">
+
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" href="deck.js/themes/transition/horizontal-slide.css">
+
+  <!-- Custom Styles. -->
+  <link rel="stylesheet" href="static/style.css">
+
+  <!-- Required Modernizr file -->
+  <script src="deck.js/modernizr.custom.js"></script>
+
+  <!-- TODO : Make this load the CDN if the local isn't found. -->
+  <!-- MathJax -->
+  <script type="text/javascript"
+    src="/home/moorepants/usr/bin/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+</head>
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+
+<section class="slide">
+  <h2>Rigid Body Dynamics with SymPy Mechanics</h2>
+  <table class="side-by-side">
+    <tr>
+      <td>
+        <h3>Jason K. Moore</h3>
+        <p>University of California, Davis</p>
+        <p><a href="http://moorepants.info">moorepants.info</a></p>
+      </td>
+      <td>
+        <img src="static/n-pendulum-with-cart.svg" />
+      </td>
+    </tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Rigid Body Dynamics</h2>
+  <p>The study of the movement of systems of interconnected rigid bodies under
+  the action of external forces.</p>
+  <h3>Newton/Euler Equations</h3>
+  <p>$$\sum F=\frac{dp}{dt} \textrm{ and } \sum T=\frac{dH}{dt}$$</p>
+</section>
+
+<section class="slide">
+  <h2>What's it good for?</h2>
+  <ul>
+    <li>robotics</li>
+    <li>biomechanics</li>
+    <li>vehicle dynamics</li>
+    <li>spacecraft dynamics</li>
+    <li>sports biomechanics</li>
+    <li>planetary motion</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Physics Engines</h2>
+  <table class="gridtable float-right">
+    <tr>
+      <th>Closed Source</th>
+      <th>Open Source</th>
+    </tr>
+    <tr>
+      <td>Autolev/MotionGenesis</td>
+      <td>MBDyn</td>
+    </tr>
+    <tr>
+      <td>DADS</td>
+      <td>Open Dynamics Engine</td>
+    </tr>
+    <tr>
+      <td>VehicleSim</td>
+      <td>Bullet</td>
+    </tr>
+    <tr>
+      <td>Working Model</td>
+      <td>SimTK</td>
+    </tr>
+    <tr>
+      <td>SDFast</td>
+      <td>Arboris</td>
+    </tr>
+    <tr>
+      <td>Spacar</td>
+      <td><a href="http://mat21.etsii.upm.es/mbs/mbs3d">MBS3D</a></td>
+    </tr>
+    <tr>
+      <td>Adams</td>
+      <td></td>
+    </tr>
+  </table>
+  <p>Two types:</p>
+  <ul>
+    <li>real time, low fidelity</li>
+    <li>high fidelity, high precision</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>The Project</h3>
+  <p>Create a high fidelity mutlibody dynamics engine for anaylsis, simulation,
+  and visualization.</p>
+  <h3>PyDy</h3>
+  <p>Short for Python Dynamics, will encompass all three aspects.</p>
+  <h3>SymPy Mechanics</h3>
+  <p>The core symbolic engine for equation of motion derviation is built on top
+  of SymPy and is the core of PyDy.</p>
+</section>
+
+<section class="slide">
+  <h2>Symbolic, Numeric, or both?</h2>
+  <h3>Why symbolic?</h3>
+  <ul>
+    <li>Ability to visualy inspect equations for better understanding</li>
+    <li>Faster numeric code with efficiently generated symbolic equations</li>
+    <li>Print to paper for consumption in literature</li>
+    <li>Maps to hand derivations</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Features</h2>
+  <ul>
+    <li>Handles 3D problems with any number of bodies</li>
+    <li>Easy defintion and management of kinematics (the tricky part)</li>
+    <li>Handles complex constraints (holonomic/non-holonomic) with ease</li>
+    <li>Automated equation of motion generation with Kane's or Langrange's
+    methods</li>
+    <li>Symbolic linearization</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Software Design</h2>
+  <ul>
+    <li><strong>essential.py</strong>: vectors, reference frames, dyadics,
+    dynamic symbols</li>
+    <li><strong>functions.py</strong>: convenience functions like angular momemtum, energy</li>
+    <li><strong>point.py</strong>: tracks location, velocity, and acceleration of a point</li>
+    <li><strong>particle.py</strong>: manages a mass and point</li>
+    <li><strong>rigidbody.py</strong>: manages a mass, point, and reference
+    frame</li>
+    <li><strong>kane.py</strong>: automates EoM generation with Kane's method</li>
+    <li><strong>lagrange.py</strong>: automates EoM generation with Langrangian
+    mechanics</li>
+</section>
+
+<section class="slide">
+  <h2>Demos</h2>
+  <h3>Basic Functionality and Vector Calculus</h3>
+  <a href="http://tinyurl.com/pydy-beginner">tinyurl.com/pydy-beginner</a>
+  <br>
+  <br>
+  <h3>1 DoF mass, spring, damper</h3>
+  <a href="http://tinyurl.com/pydy-msd">tinyurl.com/pydy-msd</a>
+  <br>
+  <br>
+  <h3>Multi-DoF inverted pendulum</h3>
+  <a href="http://tinyurl.com/pydy-npend">tinyurl.com/pydy-npend</a>
+</section>
+
+<section class="slide">
+  <h2>Can it work?</h2>
+  <iframe width="640" height="360" src="http://www.youtube.com/embed/cyN-CRNrb3E"
+    frameborder="0" allowfullscreen></iframe>
+<!-- http://youtu.be/cyN-CRNrb3E -->
+</section>
+
+<section class="slide">
+  <h2>Future</h2>
+  <ul>
+    <li>Efficient code generation for simulation</li>
+    <li>Browser based 3D visualizations</li>
+    <li>Ineractive model builder</li>
+    <li>Modelica model generaton</li>
+    <li>Electromagnetics</li>
+    <li>Flexible bodies</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Hackers</h2>
+  <ul>
+    <li>Dale Luke Peterson</li>
+    <li>Gilbert Gede</li>
+    <li>Angadh Nanjangud</li>
+    <li>Oliver Lee</li>
+    <li>Christopher Dembia</li>
+    <li>Tarun Gaba</li>
+    <li>Sachin Joglekar</li>
+    <li>SymPy Team</li>
+  </ul>
+  <p>Also thanks to Google and the Summer of Code</p>
+</section>
+
+<section class="slide">
+  <h2>That's all folks!</h2>
+  <table class="side-by-side">
+    <tr>
+      <td>
+        <ul>
+          <li><strong>SymPy</strong>: <a
+            href="https://sympy.org">sympy.org</a></li>
+          <li><strong>PyDy</strong>: <a
+            href="https://pydy.org">pydy.org</a></li>
+          <li><strong>Working paper</strong>: <a
+            href="https://github.com/PythonDynamics/idetc-2013-paper">github.com/PythonDynamics/idetc-2013-paper</a></li>
+          <li><strong>Presentation Source</strong>: <a
+            href="https://github.com/PythonDynamics/scipy-2013-mechanics">github.com/PythonDynamics/scipy-2013-mechanics</a></li>
+        </ul>
+      </td>
+      <td>
+        <img src="static/bye.png" />
+      </td>
+    </tr>
+  </table>
+</section>
+
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+  <span class="deck-status-current"></span>
+  /
+  <span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+  <label for="goto-slide">Go to slide:</label>
+  <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+  <datalist id="goto-datalist"></datalist>
+  <input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="deck.js/jquery-1.7.2.min.js"></script>
+<script src="deck.js/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="deck.js/core/deck.core.js"></script>
+<script src="deck.js/extensions/hash/deck.hash.js"></script>
+<script src="deck.js/extensions/menu/deck.menu.js"></script>
+<script src="deck.js/extensions/goto/deck.goto.js"></script>
+<script src="deck.js/extensions/status/deck.status.js"></script>
+<script src="deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="deck.js/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+</body>
+</html>

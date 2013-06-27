@@ -1,0 +1,55 @@
+/* A single row table with the images side by side, filling the whole screen. */
+table.side-by-side img {
+  max-height: 500px;
+  max-width: 500px;
+  padding: 10px;
+  margin: 10px;
+}
+
+table.side-by-side {
+  background-color: white;
+/*	border-radius: 15px;
+	box-shadow: 10px 10px 5px #888;
+*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.side-by-side td {
+  vertical-align: middle;
+}
+
+.upper-padding {
+  padding-top: 3cm;
+}
+
+li.alert {
+  color: #c00;
+}
+
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:16px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+
+.float-right {
+  float: right;
+}
